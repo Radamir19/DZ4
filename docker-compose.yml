@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  orders-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: orders_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5431:5432"
+
+  payments-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: payments_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+
+  gateway:
+    build:
+      context: .
+      dockerfile: Gateway/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - orders-api
+      - payments-api
+
+  orders-api:
+    build:
+      context: .
+      dockerfile: Orders/Dockerfile
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=orders-db;Database=orders_db;Username=postgres;Password=admin
+      - RabbitMQ__Host=rabbitmq
+    depends_on:
+      - orders-db
+      - rabbitmq
+
+  payments-api:
+    build:
+      context: .
+      dockerfile: Payments/Dockerfile
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=payments-db;Database=payments_db;Username=postgres;Password=admin
+      - RabbitMQ__Host=rabbitmq
+    depends_on:
+      - payments-db
+      - rabbitmq

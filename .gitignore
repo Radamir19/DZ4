@@ -1,0 +1,46 @@
+## --- ОСНОВНЫЕ ФАЙЛЫ .NET ---
+# Папки с результатами сборки и временные файлы
+[Bb]in/
+[Oo]bj/
+# Результаты публикации
+publish/
+
+## --- IDE (Rider / Visual Studio / VS Code) ---
+# Настройки JetBrains Rider
+.idea/
+*.sln.iml
+# Настройки Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+# Настройки VS Code
+.vscode/
+
+## --- ПАКЕТЫ И ЗАВИСИМОСТИ ---
+# Папка NuGet пакетов
+packages/
+# Файлы восстановления NuGet
+project.lock.json
+project.fragment.lock.json
+# Локальные секреты (если используются)
+usersecrets.json
+
+## --- DOCKER ---
+# Временные файлы Docker
+.docker/
+# Если Docker Desktop создает мусор в папке проекта
+docker-compose.override.yml*
+
+## --- ОПЕРАЦИОННАЯ СИСТЕМА ---
+# macOS
+.DS_Store
+# Windows
+Thumbs.db
+desktop.ini
+
+## --- БАЗЫ ДАННЫХ ---
+# Если вдруг БД хранит файлы прямо в папке проекта (редко, но бывает)
+*.db
+*.sqlite
